@@ -18,7 +18,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   //initialState上面登录函数返回的信息
   return {
     logo: 'https://github.com/XiaoRongwen/imgs/blob/master/logo.png?raw=true', //左上角Logo
-    title: 'xxxx运营平台', //左上角Logo后面的名字
+    title: '风电场工程后台管理系统', //左上角Logo后面的名字
     menu: {
       locale: false, //菜单是否国际化
     },

@@ -7,11 +7,6 @@ interface Node {
   completed: boolean;
 }
 
-// interface Link {
-//   source: string;
-//   target: string;
-// }
-
 interface FlowchartProps {
   data: Node[];
 }
@@ -23,13 +18,27 @@ const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
     if (!data || data.length === 0 || !svgRef.current) return;
 
     const svg = d3.select(svgRef.current);
-    const margin = { top: 20, right: 0, bottom: 30, left: 0 };
+    const margin = { top: 20, right: 50, bottom: 30, left: 0 };
 
     const svgWidth = 600;
 
     const g = svg
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    svg
+      .append('defs')
+      .append('marker')
+      .attr('id', 'arrow') // 箭头标记的id
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 9)
+      .attr('refY', 0)
+      .attr('markerWidth', 6)
+      .attr('markerHeight', 6)
+      .attr('orient', 'auto')
+      .append('path')
+      .attr('d', 'M0,-5L10,0L0,5') // 箭头形状路径
+      .attr('fill', 'black');
 
     // Draw rectangles for each workflow step
     const rects = g
@@ -75,21 +84,20 @@ const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
       text.style('display', 'none');
 
       // 添加指向下一个矩形的指针
-      // if (i < data.length - 1) {
-      //   const nextRect = g.select<SVGRectElement>('rect:nth-child(' + (i + 2) + ')');
-      //   const nextRectY = parseFloat(nextRect.attr('y'));
-      //   const pointerY = rectY + rectHeight;
-      //   const pointerX = rectX + rectWidth / 2;
+      if (i < data.length - 1) {
+        const pointerY = rectY + rectHeight;
+        const nextRectY = pointerY + 70;
+        const pointerX = rectX + rectWidth / 2;
 
-      //   g.append('line')
-      //     .attr('x1', pointerX)
-      //     .attr('y1', pointerY)
-      //     .attr('x2', pointerX)
-      //     .attr('y2', nextRectY)
-      //     .attr('stroke', 'black')
-      //     .attr('stroke-width', 2)
-      //     .attr('marker-end', 'url(#arrow)'); // 添加箭头标记
-      // }
+        g.append('line')
+          .attr('x1', pointerX)
+          .attr('y1', pointerY)
+          .attr('x2', pointerX)
+          .attr('y2', nextRectY)
+          .attr('stroke', 'black')
+          .attr('stroke-width', 2)
+          .attr('marker-end', 'url(#arrow)'); // 添加箭头标记
+      }
     });
   }, [data, innerWidth, innerHeight]);
 

@@ -1,3 +1,3 @@
 export default function Details() {
-  return <div>用户列表</div>;
+  return <div>竣工验收</div>;
 }
