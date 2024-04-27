@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 interface Node {
   id: number;
   name: string;
-  completed: boolean;
+  status: number;
 }
 
 interface FlowchartProps {
@@ -13,6 +13,7 @@ interface FlowchartProps {
 
 const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const statusQue = ['gray', 'blue', 'purple', 'cyan', 'green'];
 
   useEffect(() => {
     if (!data || data.length === 0 || !svgRef.current) return;
@@ -38,7 +39,7 @@ const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M0,-5L10,0L0,5') // 箭头形状路径
-      .attr('fill', 'black');
+      .attr('fill', 'gray');
 
     // Draw rectangles for each workflow step
     const rects = g
@@ -48,7 +49,7 @@ const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
       .append('rect')
       .attr('rx', 10) // Set corner radius
       .attr('ry', 10)
-      .attr('fill', (d) => (d.completed ? 'green' : 'gray'));
+      .attr('fill', (d) => statusQue[d.status - 1]);
 
     rects.each(function (d, i) {
       const text = d3
@@ -94,7 +95,7 @@ const Flowchart: React.FC<FlowchartProps> = ({ data }) => {
           .attr('y1', pointerY)
           .attr('x2', pointerX)
           .attr('y2', nextRectY)
-          .attr('stroke', 'black')
+          .attr('stroke', 'gray')
           .attr('stroke-width', 2)
           .attr('marker-end', 'url(#arrow)'); // 添加箭头标记
       }

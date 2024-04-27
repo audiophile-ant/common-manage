@@ -1,6 +1,7 @@
 // 运行时配置
-import { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
-import { message } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
+import { RequestConfig, RunTimeLayoutConfig, history } from '@umijs/max';
+import { Dropdown, MenuProps, message } from 'antd';
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<{
@@ -16,8 +17,20 @@ export async function getInitialState(): Promise<{
 
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   //initialState上面登录函数返回的信息
+
+  const DropdownItems: MenuProps['items'] = [
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: '退出登录',
+    },
+  ];
+
+  const DropdownOnClick: MenuProps['onClick'] = () => {
+    history.push('/login');
+  };
   return {
-    logo: 'https://github.com/XiaoRongwen/imgs/blob/master/logo.png?raw=true', //左上角Logo
+    // logo: 'https://github.com/XiaoRongwen/imgs/blob/master/logo.png?raw=true', //左上角Logo
     title: '风电场工程后台管理系统', //左上角Logo后面的名字
     menu: {
       locale: false, //菜单是否国际化
@@ -27,29 +40,18 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     avatarProps: {
       src: initialState?.avatar || undefined, //右上角头像
       title: initialState?.name || '用户', //右上角名称
-    },
-    token: {
-      //菜单的样式配置
-      //   colorBgAppListIconHover: 'rgba(0,0,0,0.06)',
-      //   colorTextAppListIconHover: 'rgba(255,255,255,0.95)',
-      //   colorTextAppListIcon: 'rgba(255,255,255,0.85)',
-      sider: {
-        //侧边菜单的配置 ，这里具体看文档
-        // colorBgCollapsedButton: '#fff',
-        // colorTextCollapsedButtonHover: '#1677ff',
-        // colorTextCollapsedButton: 'rgba(0,0,0,0.45)',
-        colorMenuBackground: '#fff',
-        // colorBgMenuItemCollapsedElevated: 'rgba(0,0,0,0.85)',
-        colorMenuItemDivider: 'rgba(255,255,255,0.15)',
-        colorBgMenuItemHover: 'rgba(0,0,0,0.06)',
-        colorBgMenuItemSelected: 'rgba(0,0,0,0.05)',
-        colorTextMenuSelected: '#1677ff',
-        colorTextMenuItemHover: '#1677ff',
-        // colorTextMenu: 'rgba(255,255,255,0.75)',
-        // colorTextMenuSecondary: 'rgba(255,255,255,0.65)',
-        colorTextMenuTitle: 'rgba(255,255,255,0.95)',
-        colorTextMenuActive: '#1677ff',
-        colorTextSubMenuSelected: '#1677ff',
+      size: 'small',
+      render: (props, dom) => {
+        return (
+          <Dropdown
+            menu={{
+              items: DropdownItems,
+              onClick: DropdownOnClick,
+            }}
+          >
+            {dom}
+          </Dropdown>
+        );
       },
     },
   };

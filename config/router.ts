@@ -34,11 +34,6 @@ const routes = [
     ],
   },
   {
-    name: '整套启动',
-    path: '/full-startup',
-    component: './FullStartup',
-  },
-  {
     name: '人员信息管理',
     path: '/customer-manage',
     component: './CustomerManage',
@@ -56,6 +51,11 @@ const routes = [
         component: './CustomerManage/ProductionInspection',
       },
     ],
+  },
+  {
+    name: '整套启动',
+    path: '/full-startup',
+    component: './FullStartup',
   },
   {
     name: '验收资料提交',

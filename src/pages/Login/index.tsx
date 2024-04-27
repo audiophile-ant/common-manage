@@ -28,9 +28,9 @@ export default () => {
       <LoginFormPage
         onFinish={onSubmit}
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
-        logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-        title="Github"
-        subTitle="全球最大的代码托管平台"
+        // logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+        title="风电场工程管理系统"
+        subTitle="让工程管理无懈可击"
         // activityConfig={{
         //   style: {
         //     boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.2)',
